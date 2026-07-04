@@ -1,0 +1,15 @@
+=== Confluent Cloud API key ===
+
+API key:
+QDVWMDI4ZA4CBUVU
+
+API secret:
+cfltHJwgqcOu3Xwl4DvpRlzsQolkskcYayOp4SPYKwKrwezWoEYA4fz9IqtHXPAg
+
+Resource scope:
+Global
+
+kafka_cluster_endpoint = https://pkc-619z3.us-east1.gcp.confluent.cloud:443
+
+bootstrap_server = pkc-619z3.us-east1.gcp.confluent.cloud:9092
+

@@ -1,0 +1,40 @@
+{
+  "namespace": "com.kaggle.onlineretail",
+  "name": "Purchase",
+  "type": "record",
+  "fields": [
+    {
+      "name": "Invoice",
+      "type": "string"
+    },
+    {
+      "name": "StockCode",
+      "type": "string"
+    },
+    {
+      "name": "Description",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "Quantity",
+      "type": "int"
+    },
+    {
+      "name": "InvoiceDate",
+      "type": "string"
+    },
+    {
+      "name": "Price",
+      "type": "double"
+    },
+    {
+      "name": "CustomerID",
+      "type": "int"
+    },
+    {
+      "name": "Country",
+      "type": "string"
+    }
+  ]
+}

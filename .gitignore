@@ -1,0 +1,58 @@
+# Personal files - never push to GitHub
+subramani/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IDE
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Data files (large)
+*.csv
+*.parquet
+*.avro
+*.orc
+
+# Credentials / secrets
+*.pem
+*.key
+secrets.json
+.env.*
+
+# Temp files
+tmp/
+temp/

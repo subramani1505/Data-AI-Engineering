@@ -1,0 +1,444 @@
+
+<style>
+  h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-sans);color:var(--text-primary)}
+  .tabs{display:flex;gap:6px;padding:1rem 1rem 0;flex-wrap:wrap;border-bottom:0.5px solid var(--border);background:var(--surface-1)}
+  .tab{padding:7px 14px;font-size:13px;border-radius:6px 6px 0 0;border:0.5px solid transparent;cursor:pointer;color:var(--text-secondary);background:transparent;transition:all .15s}
+  .tab:hover{color:var(--text-primary);background:var(--surface-2)}
+  .tab.active{color:var(--text-primary);background:var(--surface-2);border-color:var(--border);border-bottom-color:var(--surface-2);font-weight:500}
+  .panel{display:none;padding:1.25rem 1rem}
+  .panel.active{display:block}
+  .desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:1rem;max-width:560px}
+  .code-block{background:var(--surface-0);border:0.5px solid var(--border);border-radius:8px;padding:1rem;font-family:var(--font-mono);font-size:12px;line-height:1.7;color:var(--text-primary);overflow-x:auto;white-space:pre;margin-top:.75rem}
+  .kw{color:#7F77DD}.fn{color:#1D9E75}.st{color:#BA7517}.cm{color:var(--text-muted)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:.75rem}
+  .leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
+  .leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .hint{font-size:11px;color:var(--text-muted);margin-top:.5rem}
+  svg text{font-family:var(--font-sans)}
+</style>
+
+<h2 class="sr-only">LangGraph Module 4 — Edges: an interactive visual guide covering Simple Edges, Conditional Edges, Dynamic Routing, Branching, Multiple Paths, and Edge Logic</h2>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" onclick="show(0)">Simple edges</button>
+  <button class="tab" onclick="show(1)">Conditional edges</button>
+  <button class="tab" onclick="show(2)">Dynamic routing</button>
+  <button class="tab" onclick="show(3)">Branching</button>
+  <button class="tab" onclick="show(4)">Multiple paths</button>
+  <button class="tab" onclick="show(5)">Edge logic</button>
+</div>
+
+<!-- ── PANEL 0: Simple Edges ── -->
+<div class="panel active" id="p0">
+  <p class="desc">A simple edge is a fixed, unconditional connection from one node to the next. Every time node A finishes, execution always moves to node B — no conditions, no decisions.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#5DCAA5"></div>Regular node</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#7F77DD"></div>START / END</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#888780;height:3px;border-radius:1px"></div>Simple edge</div>
+  </div>
+  <svg width="100%" viewBox="0 0 680 200" role="img">
+    <title>Simple edges diagram</title>
+    <desc>A linear flow: START → clean_node → count_node → validate_node → END, all connected by unconditional edges</desc>
+    <defs><marker id="arr0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- START -->
+    <g>
+      <rect x="20" y="78" width="70" height="44" rx="22" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="55" y="100" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#26215C">START</text>
+    </g>
+    <!-- node 1 -->
+    <g>
+      <rect x="130" y="72" width="110" height="56" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="185" y="95" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">clean_node</text>
+      <text x="185" y="115" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">strips &amp; lowercases</text>
+    </g>
+    <!-- node 2 -->
+    <g>
+      <rect x="280" y="72" width="110" height="56" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="335" y="95" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">count_node</text>
+      <text x="335" y="115" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">counts words</text>
+    </g>
+    <!-- node 3 -->
+    <g>
+      <rect x="430" y="72" width="120" height="56" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="490" y="95" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">validate_node</text>
+      <text x="490" y="115" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">checks count ≥ 3</text>
+    </g>
+    <!-- END -->
+    <g>
+      <rect x="591" y="78" width="70" height="44" rx="22" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="626" y="100" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#26215C">END</text>
+    </g>
+    <!-- arrows -->
+    <line x1="90" y1="100" x2="128" y2="100" stroke="#888780" stroke-width="1.5" marker-end="url(#arr0)"/>
+    <line x1="240" y1="100" x2="278" y2="100" stroke="#888780" stroke-width="1.5" marker-end="url(#arr0)"/>
+    <line x1="390" y1="100" x2="428" y2="100" stroke="#888780" stroke-width="1.5" marker-end="url(#arr0)"/>
+    <line x1="550" y1="100" x2="589" y2="100" stroke="#888780" stroke-width="1.5" marker-end="url(#arr0)"/>
+    <!-- labels on arrows -->
+    <text x="109" y="93" text-anchor="middle" font-size="10" fill="#888780">always</text>
+    <text x="259" y="93" text-anchor="middle" font-size="10" fill="#888780">always</text>
+    <text x="409" y="93" text-anchor="middle" font-size="10" fill="#888780">always</text>
+    <text x="570" y="93" text-anchor="middle" font-size="10" fill="#888780">always</text>
+  </svg>
+  <div class="code-block"><span class="cm"># add_edge(from_node, to_node) — unconditional</span>
+builder.set_entry_point(<span class="st">"clean_node"</span>)
+builder.add_edge(<span class="st">"clean_node"</span>, <span class="st">"count_node"</span>)
+builder.add_edge(<span class="st">"count_node"</span>, <span class="st">"validate_node"</span>)
+builder.add_edge(<span class="st">"validate_node"</span>, END)</div>
+  <p class="hint">set_entry_point() is a shorthand for add_edge(START, "first_node")</p>
+</div>
+
+<!-- ── PANEL 1: Conditional Edges ── -->
+<div class="panel" id="p1">
+  <p class="desc">A conditional edge runs a <strong>router function</strong> after a node finishes. The router reads the state and returns a string that names the next node. LangGraph jumps to that node.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#5DCAA5"></div>Regular node</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#EF9F27"></div>Router function</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#7F77DD"></div>START / END</div>
+  </div>
+  <svg width="100%" viewBox="0 0 680 260" role="img">
+    <title>Conditional edges diagram</title>
+    <desc>validate_node leads to a router diamond. If valid, goes to publish_node then END. If invalid, goes to reject_node then END.</desc>
+    <defs><marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- validate_node -->
+    <g>
+      <rect x="30" y="108" width="130" height="56" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="95" y="131" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">validate_node</text>
+      <text x="95" y="151" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">sets is_valid flag</text>
+    </g>
+    <!-- router diamond -->
+    <polygon points="270,136 310,110 350,136 310,162" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+    <text x="310" y="136" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="#412402">route()</text>
+    <!-- publish_node -->
+    <g>
+      <rect x="420" y="60" width="120" height="52" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="480" y="82" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">publish_node</text>
+      <text x="480" y="100" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">saves to DB</text>
+    </g>
+    <!-- reject_node -->
+    <g>
+      <rect x="420" y="160" width="120" height="52" rx="8" fill="#F5C4B3" stroke="#993C1D" stroke-width="0.5"/>
+      <text x="480" y="182" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#4A1B0C">reject_node</text>
+      <text x="480" y="200" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#712B13">logs error</text>
+    </g>
+    <!-- END nodes -->
+    <g><rect x="590" y="67" width="60" height="36" rx="18" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="620" y="85" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="#26215C">END</text></g>
+    <g><rect x="590" y="167" width="60" height="36" rx="18" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="620" y="185" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="#26215C">END</text></g>
+    <!-- arrows -->
+    <line x1="160" y1="136" x2="268" y2="136" stroke="#888780" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="350" y1="120" x2="418" y2="93" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="350" y1="152" x2="418" y2="179" stroke="#D85A30" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="540" y1="86" x2="588" y2="85" stroke="#888780" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <line x1="540" y1="186" x2="588" y2="185" stroke="#888780" stroke-width="1.5" marker-end="url(#arr1)"/>
+    <!-- edge labels -->
+    <text x="380" y="105" font-size="11" fill="#0F6E56" font-weight="500">"publish"</text>
+    <text x="362" y="170" font-size="11" fill="#993C1D" font-weight="500">"reject"</text>
+  </svg>
+  <div class="code-block"><span class="kw">def</span> <span class="fn">route_after_validate</span>(state):
+    <span class="kw">if</span> state[<span class="st">"is_valid"</span>]:
+        <span class="kw">return</span> <span class="st">"publish"</span>       <span class="cm"># string must match a node name</span>
+    <span class="kw">return</span> <span class="st">"reject"</span>
+
+builder.add_conditional_edges(
+    <span class="st">"validate_node"</span>,          <span class="cm"># source node</span>
+    route_after_validate,       <span class="cm"># router function</span>
+    {                           <span class="cm"># mapping: return value → node name</span>
+        <span class="st">"publish"</span>: <span class="st">"publish_node"</span>,
+        <span class="st">"reject"</span>:  <span class="st">"reject_node"</span>,
+    }
+)</div>
+  <p class="hint">The router function must return one of the keys in the mapping dict. LangGraph raises an error if the return value is not a known key.</p>
+</div>
+
+<!-- ── PANEL 2: Dynamic Routing ── -->
+<div class="panel" id="p2">
+  <p class="desc">Dynamic routing means the router function decides the path at runtime — based on live state values, not hard-coded logic. The set of possible destinations is declared upfront, but which one is chosen depends entirely on what is in the state when the node finishes.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#5DCAA5"></div>Processing node</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#EF9F27"></div>Dynamic router</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#85B7EB"></div>Destination node</div>
+  </div>
+  <svg width="100%" viewBox="0 0 680 300" role="img">
+    <title>Dynamic routing diagram</title>
+    <desc>classify_node feeds a dynamic router that reads doc_type from state and routes to one of three handlers: pdf_handler, email_handler, or contract_handler</desc>
+    <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- classify_node -->
+    <g>
+      <rect x="20" y="128" width="130" height="56" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="85" y="151" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">classify_node</text>
+      <text x="85" y="171" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">sets doc_type</text>
+    </g>
+    <!-- router -->
+    <polygon points="240,156 285,128 330,156 285,184" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+    <text x="285" y="150" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="500" fill="#412402">route_</text>
+    <text x="285" y="164" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="500" fill="#412402">by_type()</text>
+    <!-- three targets -->
+    <g>
+      <rect x="400" y="50" width="130" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+      <text x="465" y="72" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#042C53">pdf_handler</text>
+      <text x="465" y="90" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">extracts tables</text>
+    </g>
+    <g>
+      <rect x="400" y="130" width="130" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+      <text x="465" y="152" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#042C53">email_handler</text>
+      <text x="465" y="170" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">parses headers</text>
+    </g>
+    <g>
+      <rect x="400" y="210" width="130" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+      <text x="465" y="232" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#042C53">contract_handler</text>
+      <text x="465" y="250" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">scans clauses</text>
+    </g>
+    <!-- arrows -->
+    <line x1="150" y1="156" x2="238" y2="156" stroke="#888780" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="330" y1="142" x2="398" y2="85" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="330" y1="156" x2="398" y2="156" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="330" y1="170" x2="398" y2="225" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <text x="355" y="100" font-size="10" fill="#185FA5">"pdf"</text>
+    <text x="338" y="150" font-size="10" fill="#185FA5">"email"</text>
+    <text x="340" y="205" font-size="10" fill="#185FA5">"contract"</text>
+    <text x="175" y="148" font-size="10" fill="#888780">reads state</text>
+  </svg>
+  <div class="code-block"><span class="kw">def</span> <span class="fn">route_by_type</span>(state):
+    doc_type = state[<span class="st">"doc_type"</span>]     <span class="cm"># read from live state</span>
+    <span class="kw">if</span> doc_type <span class="kw">in</span> [<span class="st">"pdf"</span>, <span class="st">"email"</span>, <span class="st">"contract"</span>]:
+        <span class="kw">return</span> doc_type                  <span class="cm"># dynamic — could be any of the three</span>
+    <span class="kw">return</span> <span class="st">"email"</span>                       <span class="cm"># safe fallback</span>
+
+builder.add_conditional_edges(
+    <span class="st">"classify_node"</span>,
+    route_by_type,
+    {
+        <span class="st">"pdf"</span>:      <span class="st">"pdf_handler"</span>,
+        <span class="st">"email"</span>:    <span class="st">"email_handler"</span>,
+        <span class="st">"contract"</span>: <span class="st">"contract_handler"</span>,
+    }
+)</div>
+  <p class="hint">Always include a fallback return in your router so unknown values don't crash the graph.</p>
+</div>
+
+<!-- ── PANEL 3: Branching ── -->
+<div class="panel" id="p3">
+  <p class="desc">Branching sends execution down one path chosen from several options. Unlike fan-out (parallel), branching picks exactly one branch. The branches recombine at a shared downstream node.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#5DCAA5"></div>Start / join node</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#EF9F27"></div>Router</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#CECBF6"></div>Branch node</div>
+  </div>
+  <svg width="100%" viewBox="0 0 680 290" role="img">
+    <title>Branching diagram</title>
+    <desc>triage_node routes to one of three branch nodes (fast_path, standard_path, deep_path) which all converge at respond_node</desc>
+    <defs><marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- triage_node -->
+    <g>
+      <rect x="20" y="128" width="110" height="52" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="75" y="150" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#04342C">triage_node</text>
+      <text x="75" y="168" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">scores urgency</text>
+    </g>
+    <!-- router diamond -->
+    <polygon points="200,154 236,128 272,154 236,180" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+    <text x="236" y="154" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="500" fill="#412402">route()</text>
+    <!-- three branches -->
+    <g>
+      <rect x="320" y="42" width="130" height="52" rx="8" fill="#CECBF6" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="385" y="64" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#26215C">fast_path</text>
+      <text x="385" y="82" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3C3489">cached answer</text>
+    </g>
+    <g>
+      <rect x="320" y="128" width="130" height="52" rx="8" fill="#CECBF6" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="385" y="150" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#26215C">standard_path</text>
+      <text x="385" y="168" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3C3489">single LLM call</text>
+    </g>
+    <g>
+      <rect x="320" y="214" width="130" height="52" rx="8" fill="#CECBF6" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="385" y="236" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#26215C">deep_path</text>
+      <text x="385" y="254" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3C3489">multi-step research</text>
+    </g>
+    <!-- respond_node -->
+    <g>
+      <rect x="510" y="128" width="120" height="52" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="570" y="150" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#04342C">respond_node</text>
+      <text x="570" y="168" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">formats reply</text>
+    </g>
+    <!-- arrows out of router -->
+    <line x1="130" y1="154" x2="198" y2="154" stroke="#888780" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="272" y1="140" x2="318" y2="75" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="272" y1="154" x2="318" y2="154" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="272" y1="168" x2="318" y2="233" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <!-- converge arrows -->
+    <line x1="450" y1="72" x2="508" y2="142" stroke="#888780" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="450" y1="154" x2="508" y2="154" stroke="#888780" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="450" y1="236" x2="508" y2="166" stroke="#888780" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <text x="295" y="96" font-size="10" fill="#534AB7">"fast"</text>
+    <text x="277" y="148" font-size="10" fill="#534AB7">"std"</text>
+    <text x="280" y="210" font-size="10" fill="#534AB7">"deep"</text>
+  </svg>
+  <div class="code-block"><span class="kw">def</span> <span class="fn">route_by_urgency</span>(state):
+    score = state[<span class="st">"urgency_score"</span>]
+    <span class="kw">if</span> score &gt;= 9:   <span class="kw">return</span> <span class="st">"fast"</span>
+    <span class="kw">if</span> score &gt;= 5:   <span class="kw">return</span> <span class="st">"std"</span>
+    <span class="kw">return</span> <span class="st">"deep"</span>
+
+builder.add_conditional_edges(
+    <span class="st">"triage_node"</span>, route_by_urgency,
+    {<span class="st">"fast"</span>: <span class="st">"fast_path"</span>, <span class="st">"std"</span>: <span class="st">"standard_path"</span>, <span class="st">"deep"</span>: <span class="st">"deep_path"</span>}
+)
+<span class="cm"># all branches converge at respond_node</span>
+builder.add_edge(<span class="st">"fast_path"</span>,     <span class="st">"respond_node"</span>)
+builder.add_edge(<span class="st">"standard_path"</span>, <span class="st">"respond_node"</span>)
+builder.add_edge(<span class="st">"deep_path"</span>,     <span class="st">"respond_node"</span>)</div>
+</div>
+
+<!-- ── PANEL 4: Multiple Paths / Fan-out ── -->
+<div class="panel" id="p4">
+  <p class="desc">Fan-out means one node triggers <em>multiple</em> downstream nodes that run in parallel. LangGraph supports this by adding several edges from a single source. All parallel branches must finish before execution continues at the join node.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#5DCAA5"></div>Source / join node</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#85B7EB"></div>Parallel branch</div>
+  </div>
+  <svg width="100%" viewBox="0 0 680 280" role="img">
+    <title>Fan-out multiple paths diagram</title>
+    <desc>ingest_node fans out to three parallel nodes (chunk_node, metadata_node, detect_lang_node) which all converge at embed_node</desc>
+    <defs><marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- ingest_node -->
+    <g>
+      <rect x="20" y="118" width="110" height="52" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="75" y="140" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#04342C">ingest_node</text>
+      <text x="75" y="158" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">loads document</text>
+    </g>
+    <!-- parallel branches -->
+    <g>
+      <rect x="210" y="42" width="130" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+      <text x="275" y="64" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#042C53">chunk_node</text>
+      <text x="275" y="82" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">splits text</text>
+    </g>
+    <g>
+      <rect x="210" y="118" width="130" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+      <text x="275" y="140" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#042C53">metadata_node</text>
+      <text x="275" y="158" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">extracts tags</text>
+    </g>
+    <g>
+      <rect x="210" y="194" width="130" height="52" rx="8" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
+      <text x="275" y="216" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#042C53">detect_lang_node</text>
+      <text x="275" y="234" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0C447C">identifies language</text>
+    </g>
+    <!-- embed_node -->
+    <g>
+      <rect x="420" y="118" width="110" height="52" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="475" y="140" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#04342C">embed_node</text>
+      <text x="475" y="158" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">builds vectors</text>
+    </g>
+    <!-- fan-out arrows -->
+    <line x1="130" y1="144" x2="208" y2="75" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="130" y1="144" x2="208" y2="144" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="130" y1="144" x2="208" y2="213" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <!-- fan-in arrows -->
+    <line x1="340" y1="71" x2="418" y2="132" stroke="#888780" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="340" y1="144" x2="418" y2="144" stroke="#888780" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <line x1="340" y1="217" x2="418" y2="156" stroke="#888780" stroke-width="1.5" marker-end="url(#arr4)"/>
+    <!-- parallel label -->
+    <text x="275" y="30" text-anchor="middle" font-size="11" fill="#185FA5" font-style="italic">run in parallel</text>
+    <line x1="210" y1="36" x2="340" y2="36" stroke="#185FA5" stroke-width="0.5" stroke-dasharray="4 3"/>
+  </svg>
+  <div class="code-block"><span class="cm"># Fan-out: add multiple edges from one source</span>
+builder.add_edge(<span class="st">"ingest_node"</span>, <span class="st">"chunk_node"</span>)
+builder.add_edge(<span class="st">"ingest_node"</span>, <span class="st">"metadata_node"</span>)
+builder.add_edge(<span class="st">"ingest_node"</span>, <span class="st">"detect_lang_node"</span>)
+
+<span class="cm"># Fan-in: all branches connect to the same join node</span>
+builder.add_edge(<span class="st">"chunk_node"</span>,       <span class="st">"embed_node"</span>)
+builder.add_edge(<span class="st">"metadata_node"</span>,    <span class="st">"embed_node"</span>)
+builder.add_edge(<span class="st">"detect_lang_node"</span>, <span class="st">"embed_node"</span>)
+
+<span class="cm"># embed_node runs only after ALL three branches finish</span></div>
+  <p class="hint">LangGraph waits for all incoming edges to complete before running the join node. Use reducers (from Module 2) to merge concurrent state updates correctly.</p>
+</div>
+
+<!-- ── PANEL 5: Edge Logic ── -->
+<div class="panel" id="p5">
+  <p class="desc">Edge logic covers loops (routing back to an earlier node), cycle detection, and how to implement retry or self-correction patterns cleanly.</p>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#5DCAA5"></div>Processing node</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#EF9F27"></div>Router (decides loop or exit)</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#F5C4B3"></div>Loop-back edge</div>
+  </div>
+  <svg width="100%" viewBox="0 0 680 300" role="img">
+    <title>Edge logic loop diagram</title>
+    <desc>llm_node leads to check_quality router. If quality passes, goes to END. If quality fails and retries are available, loops back to llm_node. If max retries exceeded, goes to fallback_node then END.</desc>
+    <defs><marker id="arr5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- llm_node -->
+    <g>
+      <rect x="60" y="120" width="120" height="52" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+      <text x="120" y="142" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#04342C">llm_node</text>
+      <text x="120" y="160" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">generates answer</text>
+    </g>
+    <!-- router -->
+    <polygon points="290,146 335,118 380,146 335,174" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+    <text x="335" y="140" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="500" fill="#412402">check_</text>
+    <text x="335" y="154" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="500" fill="#412402">quality()</text>
+    <!-- END -->
+    <g>
+      <rect x="460" y="60" width="60" height="36" rx="18" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="490" y="78" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="#26215C">END</text>
+    </g>
+    <!-- fallback_node -->
+    <g>
+      <rect x="450" y="188" width="130" height="52" rx="8" fill="#F5C4B3" stroke="#993C1D" stroke-width="0.5"/>
+      <text x="515" y="210" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="500" fill="#4A1B0C">fallback_node</text>
+      <text x="515" y="228" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#712B13">returns safe answer</text>
+    </g>
+    <!-- END 2 -->
+    <g>
+      <rect x="600" y="200" width="60" height="36" rx="18" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+      <text x="630" y="218" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="#26215C">END</text>
+    </g>
+    <!-- forward arrow to router -->
+    <line x1="180" y1="146" x2="288" y2="146" stroke="#888780" stroke-width="1.5" marker-end="url(#arr5)"/>
+    <!-- pass → END -->
+    <line x1="362" y1="128" x2="458" y2="83" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr5)"/>
+    <text x="395" y="112" font-size="11" fill="#0F6E56" font-weight="500">"pass"</text>
+    <!-- max_retries → fallback -->
+    <line x1="380" y1="160" x2="448" y2="205" stroke="#D85A30" stroke-width="1.5" marker-end="url(#arr5)"/>
+    <text x="392" y="200" font-size="10" fill="#993C1D">"max_retries"</text>
+    <!-- fallback → END2 -->
+    <line x1="580" y1="214" x2="598" y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#arr5)"/>
+    <!-- LOOP-BACK: retry → back to llm_node, curved path above -->
+    <path d="M335 118 Q335 50 120 50 Q120 95 120 118" fill="none" stroke="#D85A30" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr5)"/>
+    <text x="220" y="40" text-anchor="middle" font-size="10" fill="#993C1D">"retry" — loops back</text>
+  </svg>
+  <div class="code-block"><span class="kw">def</span> <span class="fn">check_quality</span>(state):
+    <span class="kw">if</span> state[<span class="st">"quality_score"</span>] &gt;= 0.8:
+        <span class="kw">return</span> <span class="st">"pass"</span>
+    <span class="kw">if</span> state[<span class="st">"retries"</span>] &gt;= 3:
+        <span class="kw">return</span> <span class="st">"max_retries"</span>    <span class="cm"># exit loop safely</span>
+    <span class="kw">return</span> <span class="st">"retry"</span>              <span class="cm"># loop back</span>
+
+builder.add_conditional_edges(
+    <span class="st">"llm_node"</span>, check_quality,
+    {
+        <span class="st">"pass"</span>:        END,
+        <span class="st">"retry"</span>:       <span class="st">"llm_node"</span>,   <span class="cm"># points back to same node!</span>
+        <span class="st">"max_retries"</span>: <span class="st">"fallback_node"</span>,
+    }
+)
+
+<span class="cm"># llm_node must also increment retries</span>
+<span class="kw">def</span> <span class="fn">llm_node</span>(state):
+    response = call_llm(state[<span class="st">"prompt"</span>])
+    score    = evaluate(response)
+    <span class="kw">return</span> {
+        <span class="st">"response"</span>:     response,
+        <span class="st">"quality_score"</span>: score,
+        <span class="st">"retries"</span>:      state[<span class="st">"retries"</span>] + 1
+    }</div>
+  <p class="hint">Always guard loops with a max-retry counter. Without it, a consistently failing node loops forever and the graph never terminates.</p>
+</div>
+
+<script>
+function show(idx) {
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+}
+</script>

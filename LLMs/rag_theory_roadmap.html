@@ -1,0 +1,342 @@
+
+<style>
+  .roadmap { padding: 1rem 0; font-family: var(--font-sans); }
+  .phase-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-tertiary); margin: 1.6rem 0 0.6rem; padding-left: 2px; }
+  .cards { display: flex; flex-wrap: wrap; gap: 10px; }
+  .card { flex: 1 1 180px; min-width: 160px; border-radius: var(--border-radius-lg); padding: 14px 16px; cursor: pointer; border: 1px solid var(--color-border-tertiary); transition: border-color .15s, box-shadow .15s; position: relative; }
+  .card:hover { border-color: var(--color-border-primary); box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .card-icon { font-size: 16px; margin-bottom: 6px; }
+  .card-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+  .card-sub { font-size: 11px; color: var(--color-text-tertiary); line-height: 1.5; }
+  .card-tag { display: inline-block; font-size: 10px; font-weight: 500; border-radius: 4px; padding: 1px 6px; margin-top: 7px; }
+  .c1 { background: #EAF3DE; } .c1 .card-tag { background: #C0DD97; color: #27500A; }
+  .c2 { background: #E6F1FB; } .c2 .card-tag { background: #B5D4F4; color: #0C447C; }
+  .c3 { background: #EEEDFE; } .c3 .card-tag { background: #CECBF6; color: #3C3489; }
+  .c4 { background: #FAEEDA; } .c4 .card-tag { background: #FAC775; color: #633806; }
+  .c5 { background: #E1F5EE; } .c5 .card-tag { background: #9FE1CB; color: #085041; }
+  @media (prefers-color-scheme: dark) {
+    .c1 { background: #173404; } .c1 .card-tag { background: #27500A; color: #C0DD97; }
+    .c2 { background: #042C53; } .c2 .card-tag { background: #0C447C; color: #B5D4F4; }
+    .c3 { background: #26215C; } .c3 .card-tag { background: #3C3489; color: #CECBF6; }
+    .c4 { background: #412402; } .c4 .card-tag { background: #633806; color: #FAC775; }
+    .c5 { background: #04342C; } .c5 .card-tag { background: #085041; color: #9FE1CB; }
+    .card-title { color: var(--color-text-primary); }
+  }
+  .detail-panel { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 1px solid var(--color-border-tertiary); padding: 18px 20px; margin-top: 10px; display: none; }
+  .detail-panel.open { display: block; }
+  .detail-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; }
+  .concept-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+  .concept-list li { font-size: 12px; color: var(--color-text-secondary); display: flex; gap: 8px; line-height: 1.5; }
+  .concept-list li::before { content: "→"; color: var(--color-text-tertiary); flex-shrink: 0; }
+  .ask-btn { margin-top: 12px; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; transition: border-color .15s; }
+  .ask-btn:hover { border-color: var(--color-border-primary); color: var(--color-text-primary); }
+  .connector { text-align: center; color: var(--color-text-tertiary); font-size: 18px; margin: 4px 0; }
+</style>
+<div class="roadmap">
+
+  <div class="phase-label">Phase 1 — Foundation</div>
+  <div class="cards">
+    <div class="card c1" onclick="toggle('emb')">
+      <div class="card-icon">🔢</div>
+      <div class="card-title">Embeddings</div>
+      <div class="card-sub">What are vectors? How do models turn words into numbers?</div>
+      <span class="card-tag">Core concept</span>
+    </div>
+    <div class="card c1" onclick="toggle('sim')">
+      <div class="card-icon">📐</div>
+      <div class="card-title">Similarity search</div>
+      <div class="card-sub">Cosine similarity, dot product, Euclidean distance</div>
+      <span class="card-tag">Core concept</span>
+    </div>
+    <div class="card c1" onclick="toggle('tok')">
+      <div class="card-icon">✂️</div>
+      <div class="card-title">Tokenization & context</div>
+      <div class="card-sub">Tokens, context windows, why chunk size matters</div>
+      <span class="card-tag">Core concept</span>
+    </div>
+  </div>
+
+  <div id="emb" class="detail-panel">
+    <div class="detail-title">Embeddings — what to study</div>
+    <ul class="concept-list">
+      <li>What a vector is — a list of floats representing meaning in N-dimensional space</li>
+      <li>How Word2Vec / BERT introduced contextual embeddings (similar meaning = nearby vectors)</li>
+      <li>Embedding dimensions — why 768-dim vs 3072-dim matters for quality vs cost</li>
+      <li>How embedding models differ: sentence-transformers vs OpenAI vs BGE</li>
+      <li>Why the same word can have different embeddings in different contexts</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain embeddings from scratch — what are they, how do they work, and why do similar meanings end up as nearby vectors?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="sim" class="detail-panel">
+    <div class="detail-title">Similarity search — what to study</div>
+    <ul class="concept-list">
+      <li>Cosine similarity — measures angle between vectors, range [-1, 1], ignores magnitude</li>
+      <li>Dot product — faster, good when vectors are normalized (same as cosine then)</li>
+      <li>Euclidean (L2) — measures absolute distance, sensitive to vector magnitude</li>
+      <li>When to use which: cosine for text semantic search, L2 for image embeddings</li>
+      <li>Why "top-k" retrieval works: get the k closest vectors to query</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain cosine similarity vs dot product vs euclidean distance for vector search — when should I use each in a RAG pipeline?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="tok" class="detail-panel">
+    <div class="detail-title">Tokenization & context — what to study</div>
+    <ul class="concept-list">
+      <li>What a token is — roughly 0.75 words; "unbelievable" = ~3 tokens</li>
+      <li>Context window — maximum tokens a model can process at once</li>
+      <li>Why chunking exists — embedding models have their own token limit (512, 8192)</li>
+      <li>Overlap: why you repeat 10-15% of tokens between chunks (avoid cutting mid-thought)</li>
+      <li>Tiktoken / HuggingFace tokenizers — how to count tokens before chunking</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain tokenization, context windows, and why overlap matters when chunking documents for a RAG pipeline')">Ask Claude to explain this →</button>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <div class="phase-label">Phase 2 — Chunking strategies</div>
+  <div class="cards">
+    <div class="card c2" onclick="toggle('fix')">
+      <div class="card-icon">📏</div>
+      <div class="card-title">Fixed-size chunking</div>
+      <div class="card-sub">Simple split by token count. Baseline approach, easy to implement</div>
+      <span class="card-tag">Approach</span>
+    </div>
+    <div class="card c2" onclick="toggle('sem')">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Semantic chunking</div>
+      <div class="card-sub">Split on meaning boundaries — headers, sentences, paragraphs</div>
+      <span class="card-tag">Approach</span>
+    </div>
+    <div class="card c2" onclick="toggle('hier')">
+      <div class="card-icon">🌲</div>
+      <div class="card-title">Hierarchical chunking</div>
+      <div class="card-sub">Parent-child chunks. Small chunk retrieved, big chunk sent to LLM</div>
+      <span class="card-tag">Advanced</span>
+    </div>
+  </div>
+
+  <div id="fix" class="detail-panel">
+    <div class="detail-title">Fixed-size chunking — what to study</div>
+    <ul class="concept-list">
+      <li>RecursiveCharacterTextSplitter in LangChain — splits on \n\n, \n, space, char in order</li>
+      <li>chunk_size (tokens) and chunk_overlap — typical: 512 size, 50 overlap</li>
+      <li>Problem: can split mid-sentence or mid-table — loses context</li>
+      <li>When to still use it: fast prototyping, uniform prose documents</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('How does fixed-size chunking work in LangChain? Show me RecursiveCharacterTextSplitter with examples')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="sem" class="detail-panel">
+    <div class="detail-title">Semantic / structural chunking — what to study</div>
+    <ul class="concept-list">
+      <li>MarkdownHeaderTextSplitter — splits on #, ##, ### to preserve section boundaries</li>
+      <li>Sentence-level splitting — NLTK, spaCy sentence tokenizers</li>
+      <li>Semantic similarity chunking — embed sentences, split when cosine distance drops</li>
+      <li>Why this matters for financial reports: each section has a distinct topic</li>
+      <li>LlamaIndex MarkdownNodeParser — preserves heading hierarchy as metadata</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain MarkdownHeaderTextSplitter and semantic chunking — how do they work and how do I choose chunk boundaries in a financial PDF?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="hier" class="detail-panel">
+    <div class="detail-title">Hierarchical chunking — what to study</div>
+    <ul class="concept-list">
+      <li>Core idea: store both small chunks (for precise retrieval) and large chunks (for context)</li>
+      <li>Small child chunk retrieved by similarity → its parent chunk sent to LLM</li>
+      <li>LlamaIndex ParentDocumentRetriever and HierarchicalNodeParser</li>
+      <li>Why this beats plain large chunks: retrieval is precise, but LLM gets full context</li>
+      <li>Typical setup: 128-token child chunks, 512-token parent chunks</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain hierarchical chunking (parent-child) for RAG — how does it work and when should I use it over regular chunking?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <div class="phase-label">Phase 3 — Vector databases</div>
+  <div class="cards">
+    <div class="card c3" onclick="toggle('vdb')">
+      <div class="card-icon">🗄️</div>
+      <div class="card-title">How vector DBs work</div>
+      <div class="card-sub">HNSW index, ANN search, payload/metadata storage</div>
+      <span class="card-tag">Core concept</span>
+    </div>
+    <div class="card c3" onclick="toggle('idx')">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Indexing algorithms</div>
+      <div class="card-sub">HNSW vs IVF vs Flat. Speed vs accuracy trade-offs</div>
+      <span class="card-tag">Core concept</span>
+    </div>
+    <div class="card c3" onclick="toggle('hyb')">
+      <div class="card-icon">🔀</div>
+      <div class="card-title">Hybrid search</div>
+      <div class="card-sub">Dense (semantic) + sparse (BM25 keyword) combined with RRF</div>
+      <span class="card-tag">Advanced</span>
+    </div>
+  </div>
+
+  <div id="vdb" class="detail-panel">
+    <div class="detail-title">How vector DBs work — what to study</div>
+    <ul class="concept-list">
+      <li>A vector DB stores (id, vector, payload) — payload = metadata like page, section, type</li>
+      <li>At insert: vector is indexed using HNSW or IVF structure for fast ANN search</li>
+      <li>At query: your query vector is embedded → DB finds k nearest neighbors</li>
+      <li>Qdrant collections, points, payloads — understand this data model</li>
+      <li>Metadata filtering: filter by type="table" AND page > 10 before vector search</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain how a vector database works internally — how are vectors stored, indexed, and searched? Use Qdrant as the example.')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="idx" class="detail-panel">
+    <div class="detail-title">Indexing algorithms — what to study</div>
+    <ul class="concept-list">
+      <li>Flat / brute-force: exact search, compares every vector — only for small datasets</li>
+      <li>IVF (Inverted File): clusters vectors, only searches relevant clusters — faster, slight recall loss</li>
+      <li>HNSW (Hierarchical Navigable Small World): graph-based, very fast, high recall, default in most DBs</li>
+      <li>ANN (Approximate Nearest Neighbor) vs exact: ANN trades ~1% recall for 100x speed</li>
+      <li>ef_construction, m parameters in HNSW — build quality vs memory tradeoff</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain HNSW indexing for vector search — how does it work, and how does it compare to IVF and flat search?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="hyb" class="detail-panel">
+    <div class="detail-title">Hybrid search — what to study</div>
+    <ul class="concept-list">
+      <li>Dense search: embedding similarity — good for semantic/paraphrased queries</li>
+      <li>Sparse search (BM25/TF-IDF): keyword matching — good for exact terms like "revenue 2024"</li>
+      <li>Why hybrid wins for financial docs: "Q3 EBITDA" needs both keyword + context match</li>
+      <li>Reciprocal Rank Fusion (RRF): merges ranked lists from both searches mathematically</li>
+      <li>Qdrant supports sparse+dense natively; BGE-M3 produces both in one model pass</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain hybrid search combining dense and sparse (BM25) vectors, and how Reciprocal Rank Fusion merges results')">Ask Claude to explain this →</button>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <div class="phase-label">Phase 4 — RAG architecture</div>
+  <div class="cards">
+    <div class="card c4" onclick="toggle('rag')">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">RAG pipeline flow</div>
+      <div class="card-sub">Index time vs query time. Ingestion → retrieval → generation</div>
+      <span class="card-tag">Architecture</span>
+    </div>
+    <div class="card c4" onclick="toggle('ret')">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Retrieval strategies</div>
+      <div class="card-sub">Top-k, MMR, reranking with cross-encoders</div>
+      <span class="card-tag">Architecture</span>
+    </div>
+    <div class="card c4" onclick="toggle('ctx')">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Context assembly</div>
+      <div class="card-sub">How retrieved chunks are packed into the LLM prompt</div>
+      <span class="card-tag">Architecture</span>
+    </div>
+  </div>
+
+  <div id="rag" class="detail-panel">
+    <div class="detail-title">RAG pipeline — what to study</div>
+    <ul class="concept-list">
+      <li>Index time: chunk → embed → store in vector DB (runs once, or on doc update)</li>
+      <li>Query time: embed query → retrieve chunks → assemble prompt → LLM generates answer</li>
+      <li>Naive RAG vs Advanced RAG vs Modular RAG — evolution of the pattern</li>
+      <li>Grounding: why RAG reduces hallucination (model answers from retrieved evidence)</li>
+      <li>The role of metadata at retrieval: filter by doc, page, section before similarity search</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain the full RAG pipeline from indexing to query time — what happens at each step and why?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="ret" class="detail-panel">
+    <div class="detail-title">Retrieval strategies — what to study</div>
+    <ul class="concept-list">
+      <li>Top-k: retrieve k most similar chunks, simple baseline (k=3 to 10)</li>
+      <li>MMR (Maximal Marginal Relevance): balances relevance + diversity, avoids redundant chunks</li>
+      <li>Reranking: use a cross-encoder (slower but precise) to re-score top-50 → pick top-5</li>
+      <li>Cross-encoder vs bi-encoder: bi-encoder fast at retrieval, cross-encoder precise at reranking</li>
+      <li>Cohere Rerank, BGE-Reranker — popular reranking models</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain retrieval strategies in RAG: top-k, MMR, and reranking with cross-encoders — when should I use each?')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="ctx" class="detail-panel">
+    <div class="detail-title">Context assembly — what to study</div>
+    <ul class="concept-list">
+      <li>Context window budget: LLM has N tokens total — retrieved chunks consume most of it</li>
+      <li>Prompt structure: system prompt + retrieved context + user query + output format</li>
+      <li>Lost-in-the-middle problem: LLMs attend more to start/end of context, miss middle chunks</li>
+      <li>Context compression: summarize retrieved chunks before inserting (LLMLingua, etc.)</li>
+      <li>Citation: how to attribute final answer back to source chunks (page, section, doc)</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('Explain how to assemble context in a RAG pipeline — prompt structure, the lost-in-the-middle problem, and how to handle citations')">Ask Claude to explain this →</button>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <div class="phase-label">Phase 5 — Multimodal specifics (your pipeline)</div>
+  <div class="cards">
+    <div class="card c5" onclick="toggle('tab')">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Table representation</div>
+      <div class="card-sub">Serialization strategies — when to summarize vs embed raw markdown</div>
+      <span class="card-tag">Your use case</span>
+    </div>
+    <div class="card c5" onclick="toggle('vlm')">
+      <div class="card-icon">🖼️</div>
+      <div class="card-title">VLM + RAG</div>
+      <div class="card-sub">How vision model outputs become retrievable text with image pointers</div>
+      <span class="card-tag">Your use case</span>
+    </div>
+    <div class="card c5" onclick="toggle('meta')">
+      <div class="card-icon">🏷️</div>
+      <div class="card-title">Metadata design</div>
+      <div class="card-sub">Schema design for multi-type documents — filtering at retrieval time</div>
+      <span class="card-tag">Your use case</span>
+    </div>
+  </div>
+
+  <div id="tab" class="detail-panel">
+    <div class="detail-title">Table representation — what to study</div>
+    <ul class="concept-list">
+      <li>Why raw markdown tables embed poorly: embeddings treat "|" as noise, not structure</li>
+      <li>Linearization: convert table rows to "In 2024, Revenue was €60.1B, up 2% YoY"</li>
+      <li>NL summary + raw table storage: embed the summary, store full table in payload</li>
+      <li>Structured JSON approach: store table as JSON in Qdrant payload for exact lookup</li>
+      <li>Table-specific embeddings: some models fine-tuned on structured data (TAPAS, etc.)</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('How should I represent financial tables for RAG — comparison of linearization, NL summary, and raw markdown embedding approaches')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="vlm" class="detail-panel">
+    <div class="detail-title">VLM + RAG — what to study</div>
+    <ul class="concept-list">
+      <li>VLM (Vision Language Model) converts chart/image to text description</li>
+      <li>That text is then embedded just like any other chunk</li>
+      <li>image_path stored in payload — returned at retrieval so chatbot can display the image</li>
+      <li>Multi-vector approach: embed both the VLM text AND (optionally) a CLIP image embedding</li>
+      <li>ColPali: newer approach — embed PDF page as image directly, skip OCR/VLM pipeline</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('How does VLM-to-RAG work for images in PDFs? Explain the full flow from image extraction to retrieval, and what ColPali is.')">Ask Claude to explain this →</button>
+  </div>
+
+  <div id="meta" class="detail-panel">
+    <div class="detail-title">Metadata design — what to study</div>
+    <ul class="concept-list">
+      <li>Every point in vector DB needs: source, page, section, type, chunk_id</li>
+      <li>type field (text | table | image) enables filtered retrieval: "only search tables"</li>
+      <li>Payload filtering in Qdrant: filter BEFORE similarity search, not after</li>
+      <li>Sparse metadata (exact match) vs dense vectors (semantic) — when to use each</li>
+      <li>Namespace / collection separation: separate collection per doc vs mixed with metadata filter</li>
+    </ul>
+    <button class="ask-btn" onclick="sendPrompt('How should I design metadata schema in Qdrant for a multimodal RAG pipeline with text, tables, and images from financial PDFs?')">Ask Claude to explain this →</button>
+  </div>
+
+</div>
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+</script>
