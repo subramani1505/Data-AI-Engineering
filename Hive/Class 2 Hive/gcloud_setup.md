@@ -154,6 +154,8 @@ gcloud compute scp Reviews.csv subramani_uvce1@my-hive-cluster-m:/home/subramani
 | `/home/subramani_uvce1` | Destination folder on the master node |
 | `--zone=us-central1-a` | The zone where your cluster is running |
 
+in gcloud terminal it shows : Reviews.csv | 293852 kB | 2825.5 kB/s | ETA: 00:00:00 | 100%
+
 **What happens internally:**
 
 ```
@@ -264,8 +266,37 @@ hadoop fs -ls /user/subramani_uvce1/input/
 Found 1 items
 -rw-r--r-- 3 subramani_uvce1 supergroup 314572800 2026-07-07 10:05 /user/subramani_uvce1/input/Reviews.csv
 ```
-
+-rw-r--r--   2 subramani_uvce1 hadoop  300904694 2026-07-10 12:17 /user/subramani_uvce1/input/Reviews.csv
 ---
+## Description of Above result from the Hadoop Cluster
+
+ -   rw-   r--   r--
+ │    │     │     │
+ │    │     │     └── Others : read only
+ │    │     └──── Group  : read only
+ │    └────────── Owner  : read + write (NO execute)
+ └─────────────── File type: `-` = file, `d` = directory
+
+Here 2 is the replication factor = 2 replicas (copies) of this file stored across 2 DataNodes.
+
+usaully in HDFS we have by defualt 3 replicas are there for fault tolerance.
+
+# just for an Reference
+File is 300 MB
+100 MB in DN 1
+100 MB in DN 2
+100 MB in DN 3
+
+| Field | Value | Meaning |
+|---|---|---|
+| **Permissions** | `-rw-r--r--` | File type + access rights (owner/group/others) |
+| **Replication Factor** | `2` | Number of copies stored across DataNodes |
+| **Owner** | `subramani_uvce1` | The user who owns the file |
+| **Group** | `hadoop` | The group associated with the file |
+| **Size** | `300904694` | File size in bytes (~287 MB) |
+| **Date** | `2026-07-10` | Last modification date |
+| **Time** | `12:17` | Last modification time (UTC) |
+| **Path** | `/user/subramani_uvce1/input/Reviews.csv` | Full HDFS file path |
 
 ## Complete Setup — End to End Summary
 
