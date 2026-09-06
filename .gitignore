@@ -1,0 +1,15 @@
+﻿# Secrets & Environments
+.env
+*.env
+.venv/
+venv/
+env/
+# Databases & Vector Stores
+*.db
+*.sqlite3
+chroma_db/
+embedding_cache/
+# Python Cache & Logs
+__pycache__/
+*.py[cod]
+*.log

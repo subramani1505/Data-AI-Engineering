@@ -1,0 +1,96 @@
+# ============================================================
+# requirements.txt — Full Dependency List
+# Project: Subramani_PW Python (LangGraph + LangChain + Module1)
+# Generated: 2026-07-13
+# ============================================================
+# Install into your virtual environment with:
+#   pip install -r requirements.txt
+# ============================================================
+
+
+# ── Jupyter / Notebook ──────────────────────────────────────
+jupyter
+ipykernel
+notebook
+
+
+# ── Environment Management ───────────────────────────────────
+python-dotenv
+
+
+# ── LangChain Core & Community ──────────────────────────────
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+
+
+# ── LangChain LLM Provider Integrations ─────────────────────
+langchain-openai          # OpenAI & Azure OpenAI (ChatOpenAI, AzureChatOpenAI, OpenAIEmbeddings)
+langchain-groq            # Groq (ChatGroq)
+langchain-anthropic       # Anthropic Claude (ChatAnthropic)
+langchain-google-genai    # Google Gemini (ChatGoogleGenerativeAI)
+
+
+# ── LangGraph ───────────────────────────────────────────────
+langgraph                 # Core: StateGraph, MessagesState, ToolNode, etc.
+langgraph-checkpoint-sqlite  # SqliteSaver (state_persistance.ipynb)
+
+
+# ── LangSmith (Observability) ────────────────────────────────
+langsmith                 # Client, evaluation — used in callbacks_observability.ipynb
+
+
+# ── LangChain Vector Store Integrations ─────────────────────
+langchain-chroma          # Chroma vector store
+chromadb                  # ChromaDB backend
+
+langchain-pinecone        # Pinecone vector store
+pinecone                  # Pinecone SDK (pinecone-client replaced by 'pinecone')
+
+
+# ── LangChain Embeddings Integrations ───────────────────────
+langchain-huggingface     # HuggingFaceEmbeddings
+
+
+# ── LangChain Experimental ──────────────────────────────────
+langchain-experimental    # SemanticChunker, PythonREPLTool
+
+
+# ── Groq (direct SDK) ────────────────────────────────────────
+groq                      # Used in Module1 Foundations/test_llm_message.py
+
+
+# ── OpenAI (direct SDK) ─────────────────────────────────────
+openai                    # Used in LangChain/chat_models.ipynb
+
+
+# ── Search & Web Tools ──────────────────────────────────────
+ddgs                      # DuckDuckGo Search (renamed from duckduckgo-search)
+tavily-python             # Tavily Search API (TavilySearchResults)
+wikipedia                 # Wikipedia tool (WikipediaQueryRun)
+
+
+# ── Web Frameworks (optional / advanced notebooks) ───────────
+fastapi                   # streaming_langchain.ipynb FastAPI streaming demo
+uvicorn                   # ASGI server for FastAPI
+flask                     # chat_models.ipynb Flask demo
+
+
+# ── Data & Utilities ────────────────────────────────────────
+requests                  # HTTP calls in tools_integration.ipynb
+numpy                     # Used in embedding_models.ipynb, chains_lcel.ipynb
+pandas                    # Used in tools.ipynb (PythonREPLTool demo)
+pydantic                  # Used throughout (BaseModel, Field)
+sqlalchemy                # SQL tool in LangChain/tools.ipynb
+
+
+# ── JSON helpers (LangGraph compatibility fix) ───────────────
+jsonpatch
+jsonpointer
+
+
+# ── Document Loaders (LangChain community loaders) ──────────
+pypdf                     # PyPDFLoader (PDF document loading)
+# jq                      # Uncomment if using JSON/JQ loaders (requires binary)
+# python-docx             # Uncomment if loading .docx files
